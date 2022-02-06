@@ -11,7 +11,6 @@ const duration = document.querySelector('.time-duration');
 const fullscreenBtn = document.querySelector('.fullscreen');
 const fullscreenIcon = document.getElementById('fullscreen-icon');
 const speed = document.querySelector('.player-speed');
-let fullscreen = false;
 
 // Play & Pause ----------------------------------- //
 
@@ -99,7 +98,8 @@ const toggleMute = function () {
 // Fullscreen ------------------------------- //
 
 const toggleFullscreen = function () {
-  const fullscreenElement = document.fullscreenElement ? 'fullscreenElement' : 'webkitFullscreenElement';
+  const fullscreenElement = document.fullscreenElement ? 'fullscreenElement' : 
+  document.webkitFullscreenElement ? 'webkitFullscreenElement' : 'msFullscreenElement';
   const openFullscreen = player.requestFullscreen || player.webkitRequestFullscreen || player.msRequestFullscreen;
   const closeFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
   return function () {
@@ -108,7 +108,7 @@ const toggleFullscreen = function () {
 }();
 
 function styleFullscreen () {
-  const onFullscreenMode = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+  const onFullscreenMode = Boolean(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
   if (onFullscreenMode) {
     fullscreenIcon.classList.replace('fa-expand', 'fa-compress');
     fullscreenIcon.setAttribute('title', 'Exit fullscreen');
@@ -133,3 +133,4 @@ volumeIcon.addEventListener('click', toggleMute);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
 document.addEventListener('fullscreenchange', styleFullscreen);
 document.addEventListener('webkitfullscreenchange', styleFullscreen);
+document.addEventListener('MSFullscreenChange', styleFullscreen);
