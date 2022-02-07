@@ -103,23 +103,28 @@ const fullscreen = function () {
   player.msRequestFullscreen ? 'msFullscreenElement' : 'notSupported';
   let openFullscreen = () => {};
   let closeFullscreen = () => {};
+  let fullscreenchange = '';
   switch (fullscreenElement) {
     case 'fullscreenElement':
       openFullscreen = player.requestFullscreen;
       closeFullscreen = document.exitFullscreen;
+      fullscreenchange = 'fullscreenchange';
       break;
     case 'webkitFullscreenElement':
       openFullscreen = player.webkitRequestFullscreen;
       closeFullscreen = document.webkitExitFullscreen;
+      fullscreenchange = 'webkitfullscreenchange';
       break;
     case 'msFullscreenElement':
       openFullscreen = player.msRequestFullscreen;
       closeFullscreen = document.msExitFullscreen;
+      fullscreenchange = 'MSFullscreenChange';
       break;
     default:
       alert("Your browser doesn't support Fullscreen Mode");
       break;
   }
+  setTimeout(() => {document.addEventListener(fullscreenchange, fullscreen.styleElements);}, 0);
   return {
     toggleMode: function () {
     document[fullscreenElement] ? closeFullscreen.call(document) : openFullscreen.call(player);
@@ -148,6 +153,3 @@ progressRange.addEventListener('click', setProgress);
 volumeRange.addEventListener('click', changeVolume);
 volumeIcon.addEventListener('click', toggleMute);
 fullscreenBtn.addEventListener('click', fullscreen.toggleMode);
-document.addEventListener('fullscreenchange', fullscreen.styleElements);
-document.addEventListener('webkitfullscreenchange', fullscreen.styleElements);
-document.addEventListener('MSFullscreenChange', fullscreen.styleElements);
