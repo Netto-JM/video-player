@@ -98,8 +98,8 @@ const toggleMute = function () {
 // Fullscreen ------------------------------- //
 
 const toggleFullscreen = function () {
-  const fullscreenElement = document.fullscreenElement ? 'fullscreenElement' : 
-  document.webkitFullscreenElement ? 'webkitFullscreenElement' : 'msFullscreenElement';
+  const fullscreenElement = player.requestFullscreen ? 'fullscreenElement' : 
+  player.webkitRequestFullscreen ? 'webkitFullscreenElement' : 'msFullscreenElement';
   const openFullscreen = player.requestFullscreen || player.webkitRequestFullscreen || player.msRequestFullscreen;
   const closeFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
   return function () {
